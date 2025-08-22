@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html ng-app="restApiApp">
+<head>
+    <meta charset="UTF-8">
+    <title>AngularJS REST API with local storage</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 30px;
+        background: #F5FAE1;
+        color: #333;
+        
+    }
+
+    h2 {
+        color: #555879;
+        margin-bottom: 15px;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        font-size: 50px;
+    }
+
+    form {
+        margin-bottom: 20px;
+        padding: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+
+    input {
+        padding: 8px;
+        margin: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    button {
+        padding: 8px 12px;
+        margin: 5px;
+        border: none;
+        border-radius: 5px;
+        background: #3498db;
+        color: white;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    button:hover {
+        background: #2980b9;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    li {
+        background: #FFFF;
+        padding: 10px;
+        margin-bottom: 8px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    li button {
+        background: #e74c3c;
+    }
+
+    li button.edit {
+        background: #f1c40f;
+        color: #333;
+        margin-right: 10px;
+        border: 1px solid #ccc;
+        padding: 15px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    li button.edit:hover {
+        opacity: 0.8;
+        background-color: #f39c12;
+        color: #333;
+        
+    }
+
+    li button:hover {
+        opacity: 0.8;
+        background-color: #0bce59;
+        color: #333;
+    }
+
+    h3 {
+        margin-top: 20px;
+        color: #27ae60;
+    }
+
+    div[ng-if] {
+        background: #ecf0f1;
+        padding: 15px;
+        border-radius: 10px;
+    }
+</style>
+
+</head>
+<body ng-controller="MainController">
+    <h2>Student REST API</h2>
+
+    <form ng-submit="addStudent()">
+        <input type="text" ng-model="newStudent.name" placeholder="Name" required>
+        <input type="number" ng-model="newStudent.age" placeholder="Age" required>
+        <button type="submit">Add Student</button>
+    </form>
+
+    <ul>
+        <li ng-repeat="student in students track by $index">
+            {{student.name}} ({{student.age}} years old)
+            <button class="edit" ng-click="editStudent($index)">Edit</button>
+            <button ng-click="deleteStudent($index)">Delete</button>
+        </li>
+    </ul>
+
+    <div ng-if="editIndex !== null">
+        <h3>Edit Student</h3>
+        <form ng-submit="updateStudent()">
+            <input type="text" ng-model="editStudentData.name" required>
+            <input type="number" ng-model="editStudentData.age" required>
+            <button type="submit">Update</button>
+            <button type="button" ng-click="cancelEdit()">Cancel</button>
+        </form>
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
